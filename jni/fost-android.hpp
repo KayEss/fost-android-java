@@ -13,9 +13,11 @@
 namespace fostlib {
 
 
+    /// Global with the JVM environment in it -- probably shouldn't be used
     extern JavaVM *g_JavaVM;
 
 
+    /// Cast jstring to various C++ string types
     template<typename S>
     S jni_cast(JNIEnv *env, jstring jstr) {
         std::shared_ptr<const char> cloc(
