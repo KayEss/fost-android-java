@@ -16,5 +16,16 @@ namespace fostlib {
     extern JavaVM *g_JavaVM;
 
 
+    template<typename S>
+    S jni_cast(JNIEnv *env, jstring jstr) {
+        std::shared_ptr<const char> cloc(
+            env->GetStringUTFChars(jstr, NULL),
+            [=](const char *ptr) {
+                env->ReleaseStringUTFChars(jstr, ptr);
+            });
+        return S(cloc.get());
+    }
+
+
 }
 
