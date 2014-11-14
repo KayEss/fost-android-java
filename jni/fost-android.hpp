@@ -6,14 +6,15 @@
 */
 
 
-#include "fost-android.hpp"
+#include <fost/core>
+#include <jni.h>
 
 
-JavaVM *fostlib::g_JavaVM = nullptr;
+namespace fostlib {
 
 
+    extern JavaVM *g_JavaVM;
 
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
-    fostlib::g_JavaVM = vm;
-    return JNI_VERSION_1_6;
+
 }
+

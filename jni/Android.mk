@@ -9,8 +9,12 @@ LOCAL_PATH := $(JNI)
 LOCAL_MODULE := fost-android
 
 LOCAL_SRC_FILES := \
-	fost-android.cpp
+	fost-android.cpp \
+	webserver.cpp
 LOCAL_SHARED_LIBRARIES := \
-    boost-system
+	boost-system \
+    fost-core \
+    fost-inet \
+    fost-urlhandler
 
 include $(BUILD_SHARED_LIBRARY)
