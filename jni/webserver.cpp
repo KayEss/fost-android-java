@@ -27,8 +27,13 @@ namespace {
 
 extern "C" JNIEXPORT void JNICALL
 Java_com_felspar_android_WebServer_start(
-    JNIEnv *env, jobject self
+    JNIEnv *env, jobject self, jstring jdataroot
 ) {
+    boost::filesystem::wpath dataroot(
+        fostlib::jni_cast<boost::filesystem::wpath>(env, jdataroot));
+    g_new_root.reset(new fostlib::setting<fostlib::string>(
+        "Java_com_felspar_android_WebServer_start",
+        fostlib::c_cache_dir, fostlib::coerce<fostlib::string>(dataroot / "rproxy")));
     // Start the web server and set the termination condition
     g_running = g_server([]() {
         fostlib::http::server server(fostlib::host(0), 2555);
@@ -37,6 +42,9 @@ Java_com_felspar_android_WebServer_start(
             return g_terminate;
         });
     });
+    fostlib::log::info().module("JNI.com.felspar.android.WebServer")
+        ("dataroot", dataroot),
+        ("rproxy", g_new_root->value());
 }
 
 

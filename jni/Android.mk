@@ -14,9 +14,11 @@ LOCAL_SRC_FILES := \
     setting.cpp \
     webserver.cpp
 LOCAL_SHARED_LIBRARIES := \
+    boost-filesystem \
     boost-system \
     fost-core \
     fost-inet \
+    fost-rproxy \
     fost-urlhandler
 LOCAL_LDLIBS := -llog
 
