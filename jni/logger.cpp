@@ -25,8 +25,8 @@ namespace {
             } else if ( m.level() >= 0x400u ) {
                 level = 4; // INFO
             }
-            __android_log_print(level, "C++", "%s",
-                    fostlib::json::unparse(
+            __android_log_print(level, m.module().value("C++").c_str(),
+                    "%s", fostlib::json::unparse(
                         fostlib::coerce<fostlib::json>(m)["body"], false).c_str());
             return true;
         }
