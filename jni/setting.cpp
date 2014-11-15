@@ -24,23 +24,23 @@ namespace {
 
 extern "C" JNIEXPORT bool JNICALL
 Java_com_felspar_android_Setting_fromJSON(
-    JNIEnv *env, jobject self, jstring domain, jstring j_string
+    JNIEnv *env, jobject self, jstring jdomain, jstring j_string
 ) {
     try {
-        fostlib::string cppstring(fostlib::jni_cast<fostlib::string>(env, j_string));
+        fostlib::string cppstring(fostlib::jni_cast<fostlib::string>(env, j_string)),
+            domain(fostlib::jni_cast<fostlib::string>(env, jdomain));
         fostlib::json parsed(fostlib::json::parse(cppstring));
         g_settings.push_back(
             std::unique_ptr<fostlib::settings>(
-                new fostlib::settings(
-                    fostlib::jni_cast<fostlib::string>(env, domain), parsed)));
-        __android_log_print(ANDROID_LOG_INFO,
-            "JNI.com.felspar.android.Setting.fromJSON",
-            "JSON = %s", cppstring.c_str());
+                new fostlib::settings(domain, parsed)));
         g_sinks.reset(new fostlib::log::global_sink_configuration(c_logging.value()));
+        fostlib::log::info().module("JNI.com.felspar.android.Setting")
+            ("domain", domain)
+            ("settings", parsed);
         return true;
     } catch ( fostlib::exceptions::exception &e ) {
         __android_log_print(ANDROID_LOG_ERROR,
-            "JNI.com.felspar.android.Setting.fromJSON",
+            "JNI.com.felspar.android.Setting",
             "Exception.what() = %s", e.what());
         return false;
     }
