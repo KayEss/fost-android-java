@@ -12,6 +12,12 @@
 
 
 namespace {
+    const fostlib::setting<fostlib::json> c_logging(
+        "fost-android/setting.cpp",
+        "Logging", "Configuration",
+        fostlib::json(), true);
+    std::unique_ptr<fostlib::log::global_sink_configuration> g_sinks;
+
     std::list<std::unique_ptr<fostlib::settings>> g_settings;
 }
 
@@ -30,11 +36,7 @@ Java_com_felspar_android_Setting_fromJSON(
         __android_log_print(ANDROID_LOG_INFO,
             "JNI.com.felspar.android.Setting.fromJSON",
             "JSON = %s", cppstring.c_str());
-        fostlib::stringstream ss;
-        fostlib::setting<fostlib::json>::printAllOn(ss);
-        __android_log_print(ANDROID_LOG_INFO,
-            "JNI.com.felspar.android.Setting.fromJSON",
-            "%s", ss.str().c_str());
+        g_sinks.reset(new fostlib::log::global_sink_configuration(c_logging.value()));
         return true;
     } catch ( fostlib::exceptions::exception &e ) {
         __android_log_print(ANDROID_LOG_ERROR,
