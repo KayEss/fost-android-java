@@ -12,7 +12,6 @@
 #include <fost/http.server.hpp>
 #include <fost/log>
 #include <fost/urlhandler>
-#include <android/log.h>
 
 
 namespace {
@@ -30,9 +29,6 @@ extern "C" JNIEXPORT void JNICALL
 Java_com_felspar_android_WebServer_start(
     JNIEnv *env, jobject self
 ) {
-    __android_log_print(ANDROID_LOG_INFO,
-            "JNI.com.felspar.android.WebServer",
-            "%s", "Starting web server");
     // Start the web server and set the termination condition
     g_running = g_server([]() {
         fostlib::http::server server(fostlib::host(0), 2555);
@@ -41,9 +37,6 @@ Java_com_felspar_android_WebServer_start(
             return g_terminate;
         });
     });
-    __android_log_print(ANDROID_LOG_INFO,
-            "JNI.com.felspar.android.WebServer",
-            "%s", "Started web server");
 }
 
 
