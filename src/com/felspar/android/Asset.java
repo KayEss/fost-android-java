@@ -17,11 +17,28 @@ import android.util.Log;
 
 public class Asset {
     private static final String TAG = "com.felspar.android.Assets";
+    private static AssetManager assets;
 
     public static String loadString(AssetManager assetManager, String fromAssetPath) throws IOException {
+        assets = assetManager;
         Logger.log(Log.DEBUG, TAG, fromAssetPath);
         InputStream in = assetManager.open(fromAssetPath);
         return new String(readFully(in), "UTF-8");
+    }
+
+    public static byte[] loadBytes(String fromAssetPath) {
+        Logger.log(Log.DEBUG, TAG, fromAssetPath);
+        try {
+            if ( assets == null ) {
+                Logger.log(Log.ERROR, TAG, "Must call a function that takes an AssetManager first");
+                return null;
+            }
+            InputStream in = assets.open(fromAssetPath);
+            return readFully(in);
+        } catch ( IOException e ) {
+            Logger.log(Log.ERROR, TAG, "IOException");
+            return null;
+        }
     }
 
     private static byte[] readFully(InputStream inputStream) throws IOException {
