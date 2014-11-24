@@ -12,6 +12,7 @@ LOCAL_SRC_FILES := \
     fost-android.cpp \
     logger.cpp \
     setting.cpp \
+    view-assets.cpp \
     webserver.cpp
 LOCAL_SHARED_LIBRARIES := \
     boost-filesystem \
