@@ -13,8 +13,8 @@
 namespace fostlib {
 
 
-    /// Global with the JVM environment in it -- probably shouldn't be used
-    extern JavaVM *g_JavaVM;
+    /// Fetch the JNI environment for the current thread
+    JNIEnv *get_environment();
 
 
     /// Cast jstring to various C++ string types
