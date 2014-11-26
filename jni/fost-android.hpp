@@ -13,8 +13,8 @@
 namespace fostlib {
 
 
-    /// Global with the JVM environment in it -- probably shouldn't be used
-    extern JavaVM *g_JavaVM;
+    /// Fetch the JNI environment for the current thread
+    JNIEnv *get_environment();
 
 
     /// Cast jstring to various C++ string types
@@ -28,6 +28,20 @@ namespace fostlib {
         return S(cloc.get());
     }
 
+}
 
+
+
+namespace com {
+    namespace felspar {
+        namespace android {
+
+
+            /// Global reference to the com.felspar.android.Asset class
+            extern jclass Asset;
+
+
+        }
+    }
 }
 
