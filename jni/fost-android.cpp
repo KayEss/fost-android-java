@@ -13,11 +13,15 @@
 namespace {
     JavaVM *g_JavaVM = nullptr;
 }
-
+jclass com::felspar::android::Asset = nullptr;
 
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
     g_JavaVM = vm;
+    JNIEnv *env = fostlib::get_environment();
+    com::felspar::android::Asset = reinterpret_cast<jclass>(
+        env->NewGlobalRef(
+            env->FindClass("com/felspar/android/Asset")));
     return JNI_VERSION_1_6;
 }
 

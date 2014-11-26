@@ -28,6 +28,20 @@ namespace fostlib {
         return S(cloc.get());
     }
 
+}
 
+
+
+namespace com {
+    namespace felspar {
+        namespace android {
+
+
+            /// Global reference to the com.felspar.android.Asset class
+            extern jclass Asset;
+
+
+        }
+    }
 }
 
