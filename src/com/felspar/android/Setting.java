@@ -10,6 +10,7 @@ package com.felspar.android;
 
 public class Setting {
     public native static boolean fromJSON(String domain, String json);
+    public native static boolean fromString(String domain, String section, String name, String value);
 
     static {
         // Note that the order of library loading is important
