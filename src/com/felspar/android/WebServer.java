@@ -9,6 +9,6 @@
 package com.felspar.android;
 
 public class WebServer {
-    public native static void start(String dataroot);
+    public native static void start();
     public native static void stop();
 }
