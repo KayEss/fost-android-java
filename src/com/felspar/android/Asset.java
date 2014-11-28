@@ -9,8 +9,11 @@
 package com.felspar.android;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import android.content.res.AssetManager;
 import android.util.Log;
@@ -25,6 +28,15 @@ public class Asset {
         InputStream in = assetManager.open(fromAssetPath);
         return new String(readFully(in), "UTF-8");
     }
+    
+    public static void copyFile(AssetManager assetManager, String fromAssetPath, File to) throws IOException {
+    	assets = assetManager;
+        Logger.log(Log.DEBUG, TAG, fromAssetPath);
+        InputStream in = assetManager.open(fromAssetPath);
+        OutputStream out = new FileOutputStream(to);
+        copyFile(in, out);
+        out.close();
+    }
 
     public static byte[] loadBytes(String fromAssetPath) {
         Logger.log(Log.DEBUG, TAG, fromAssetPath);
@@ -36,18 +48,23 @@ public class Asset {
             InputStream in = assets.open(fromAssetPath);
             return readFully(in);
         } catch ( IOException e ) {
-            Logger.log(Log.ERROR, TAG, "IOException");
+            Logger.log(Log.ERROR, TAG, e);
             return null;
         }
     }
 
     private static byte[] readFully(InputStream inputStream) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        copyFile(inputStream, baos);
+        return baos.toByteArray();
+    }
+    
+
+    static private void copyFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
         int length = 0;
-        while ((length = inputStream.read(buffer)) != -1) {
-            baos.write(buffer, 0, length);
+        while ( (length = in.read(buffer)) != -1 ) {
+            out.write(buffer, 0, length);
         }
-        return baos.toByteArray();
     }
 }
