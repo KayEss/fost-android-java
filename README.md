@@ -1,4 +1,2 @@
-fost-android
-============
+# fost-android-java #
 
-Android build configuration for NDK with Boost and Fost libraries.
