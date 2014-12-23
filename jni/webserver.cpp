@@ -8,7 +8,7 @@
 
 #include "fost-android.hpp"
 #include <fost/internet>
-#include <fost/http-cache.hpp>
+#include <fost/rproxy>
 #include <fost/http.server.hpp>
 #include <fost/log>
 #include <fost/urlhandler>
