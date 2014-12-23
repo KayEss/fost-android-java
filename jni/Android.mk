@@ -1,11 +1,10 @@
-JNI := $(call my-dir)
+FAJ := $(call my-dir)
 
-include $(JNI)/fost-android-ndk/Android.mk
 include $(CLEAR_VARS)
 
-include $(TOP_PATH)/opts.mk
+include $(FANDK)/opts.mk
 
-LOCAL_PATH := $(JNI)
+LOCAL_PATH := $(FAJ)
 LOCAL_MODULE := fost-android
 
 LOCAL_SRC_FILES := \
