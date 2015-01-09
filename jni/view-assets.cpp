@@ -38,9 +38,10 @@ namespace {
             jbyteArray *jbytes(reinterpret_cast<jbyteArray*>(&load_result));
             if ( *jbytes == nullptr ) {
                 return std::make_pair(
-                    new fostlib::text_body(
-                        "<html><head><title>404</title></head>"
-                        "<body><h1>404</h1><pre>" + path + "</pre></body></html>"),
+                    boost::shared_ptr<fostlib::mime>(
+                        new fostlib::text_body(
+                            "<html><head><title>404</title></head>"
+                            "<body><h1>404</h1><pre>" + path + "</pre></body></html>")),
                     404);
             } else {
                 std::size_t length(env->GetArrayLength(*jbytes));
@@ -50,11 +51,12 @@ namespace {
                         env->ReleaseByteArrayElements(*jbytes, ptr, 0);
                     });
                 return std::make_pair(
-                    new fostlib::binary_body(
-                        bytes.get(), bytes.get() + length,
-                        fostlib::mime::mime_headers(),
-                        fostlib::urlhandler::mime_type(
-                            fostlib::coerce<boost::filesystem::wpath>(path))),
+                    boost::shared_ptr<fostlib::mime>(
+                        new fostlib::binary_body(
+                            bytes.get(), bytes.get() + length,
+                            fostlib::mime::mime_headers(),
+                            fostlib::urlhandler::mime_type(
+                                fostlib::coerce<boost::filesystem::wpath>(path)))),
                     200);
             }
         }
