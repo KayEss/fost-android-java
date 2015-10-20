@@ -1,5 +1,5 @@
 /*
-    Copyright 2014 Felspar Co Ltd. http://support.felspar.com/
+    Copyright 2014-2015 Felspar Co Ltd. http://support.felspar.com/
     Distributed under the Boost Software License, Version 1.0.
     See accompanying file LICENSE_1_0.txt or copy at
         http://www.boost.org/LICENSE_1_0.txt
@@ -11,6 +11,10 @@
 
 
 namespace fostlib {
+
+
+//     extern const module c_jni;
+//     extern const module c_jni_android;
 
 
     /// Fetch the JNI environment for the current thread
@@ -27,6 +31,7 @@ namespace fostlib {
             });
         return S(cloc.get());
     }
+
 
 }
 
