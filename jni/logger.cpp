@@ -1,5 +1,5 @@
 /*
-    Copyright 2014 Felspar Co Ltd. http://support.felspar.com/
+    Copyright 2014-2015 Felspar Co Ltd. http://support.felspar.com/
     Distributed under the Boost Software License, Version 1.0.
     See accompanying file LICENSE_1_0.txt or copy at
         http://www.boost.org/LICENSE_1_0.txt
@@ -25,7 +25,8 @@ namespace {
             } else if ( m.level() >= 0x400u ) {
                 level = 4; // INFO
             }
-            __android_log_print(level, m.module().value("C++").c_str(),
+            __android_log_print(level,
+                    m.module().as_string().c_str(),
                     "%s", fostlib::json::unparse(
                         fostlib::coerce<fostlib::json>(m)["body"], false).c_str());
             return true;

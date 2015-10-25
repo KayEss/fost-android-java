@@ -12,7 +12,7 @@
 
 
 namespace {
-//     const fostlib::module c_module(fostlib::c_jni_android, "setting");
+    const fostlib::module c_module(fostlib::c_android, "setting");
 
     const fostlib::setting<fostlib::json> c_logging(
         "fost-android/setting.cpp",
@@ -37,11 +37,11 @@ Java_com_felspar_android_Setting_fromJSON(
             std::unique_ptr<fostlib::settings>(
                 new fostlib::settings(domain, parsed)));
         g_sinks.reset(new fostlib::log::global_sink_configuration(c_logging.value()));
-        fostlib::log::info().module("JNI.com.felspar.android.Setting")
+        fostlib::log::info(c_module)
             ("domain", domain)("settings", parsed);
         return true;
     } catch ( fostlib::exceptions::exception &e ) {
-        fostlib::log::info().module("JNI.com.felspar.android.Setting")
+        fostlib::log::info(c_module)
             ("exceptoin", e.what())("data", e.data());
         return false;
     }
@@ -62,11 +62,12 @@ Java_com_felspar_android_Setting_fromString(
         g_setting.push_back(
             std::unique_ptr<fostlib::setting<fostlib::json>>(
                 new fostlib::setting<fostlib::json>(domain, section, name, value)));
-        fostlib::log::info().module("JNI.com.felspar.android.Setting")
+        fostlib::log::info(c_module)
             ("domain", domain)("section", section)("name", name)("value", value);
+        return true;
     } catch ( fostlib::exceptions::exception &e ) {
-        fostlib::log::info().module("JNI.com.felspar.android.Setting")
-            ("exceptoin", e.what())("data", e.data());
+        fostlib::log::error(c_module)
+            ("exception", e.what())("data", e.data());
         return false;
     }
 }

@@ -13,8 +13,7 @@
 namespace fostlib {
 
 
-//     extern const module c_jni;
-//     extern const module c_jni_android;
+    extern const module c_android;
 
 
     /// Fetch the JNI environment for the current thread

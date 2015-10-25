@@ -1,5 +1,5 @@
 /*
-    Copyright 2014 Felspar Co Ltd. http://support.felspar.com/
+    Copyright 2014-2015 Felspar Co Ltd. http://support.felspar.com/
     Distributed under the Boost Software License, Version 1.0.
     See accompanying file LICENSE_1_0.txt or copy at
         http://www.boost.org/LICENSE_1_0.txt
@@ -12,8 +12,12 @@
 
 namespace {
     JavaVM *g_JavaVM = nullptr;
+    const fostlib::module c_jni(fostlib::c_fost, "JNI");
 }
 jclass com::felspar::android::Asset = nullptr;
+
+
+const fostlib::module fostlib::c_android(c_jni, "android");
 
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
