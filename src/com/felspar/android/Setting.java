@@ -29,6 +29,7 @@ public class Setting {
         System.loadLibrary("fost-schema");
         System.loadLibrary("fost-jsondb");
         System.loadLibrary("fost-urlhandler");
+        System.loadLibrary("fost-beanbag");
         System.loadLibrary("fost-beanbag-views");
         System.loadLibrary("fost-s3");
         System.loadLibrary("fost-rproxy");
