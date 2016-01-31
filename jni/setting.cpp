@@ -42,7 +42,7 @@ Java_com_felspar_android_Setting_fromJSON(
         return true;
     } catch ( fostlib::exceptions::exception &e ) {
         fostlib::log::info(c_module)
-            ("exceptoin", e.what())("data", e.data());
+            ("esception", e.what())("data", e.data());
         return false;
     }
 }
