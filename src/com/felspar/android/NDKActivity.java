@@ -9,8 +9,15 @@
 package com.felspar.android;
 
 import android.app.NativeActivity;
+import android.os.Bundle;
 
 public class NDKActivity extends NativeActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        Asset.setAssets(getAssets());
+        super.onCreate(savedInstanceState);
+    }
+
     static {
         // Note that the order of library loading is important
         System.loadLibrary("gnustl_shared");
