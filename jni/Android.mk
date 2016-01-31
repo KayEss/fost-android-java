@@ -8,11 +8,13 @@ LOCAL_PATH := $(FAJ)
 LOCAL_MODULE := fost-android
 
 LOCAL_SRC_FILES := \
+   assets.cpp \
     fost-android.cpp \
     logger.cpp \
     setting.cpp \
     view-assets.cpp \
     webserver.cpp
+
 LOCAL_SHARED_LIBRARIES := \
     boost-filesystem \
     boost-system \
@@ -20,6 +22,7 @@ LOCAL_SHARED_LIBRARIES := \
     fost-inet \
     fost-rproxy \
     fost-urlhandler
+
 LOCAL_LDLIBS := -llog
 
 include $(BUILD_SHARED_LIBRARY)
