@@ -1,5 +1,5 @@
 /*
-    Copyright 2014-2015 Felspar Co Ltd. http://support.felspar.com/
+    Copyright 2014-2016 Felspar Co Ltd. http://support.felspar.com/
     Distributed under the Boost Software License, Version 1.0.
     See accompanying file LICENSE_1_0.txt or copy at
         http://www.boost.org/LICENSE_1_0.txt
@@ -8,7 +8,6 @@
 
 #include "fost-android.hpp"
 #include <fost/log>
-#include <android/log.h>
 
 
 namespace {
@@ -38,11 +37,13 @@ Java_com_felspar_android_Setting_fromJSON(
                 new fostlib::settings(domain, parsed)));
         g_sinks.reset(new fostlib::log::global_sink_configuration(c_logging.value()));
         fostlib::log::info(c_module)
-            ("domain", domain)("settings", parsed);
+            ("domain", domain)
+            ("settings", parsed);
         return true;
     } catch ( fostlib::exceptions::exception &e ) {
         fostlib::log::info(c_module)
-            ("esception", e.what())("data", e.data());
+            ("exception", e.what())
+            ("data", e.data());
         return false;
     }
 }
@@ -63,11 +64,15 @@ Java_com_felspar_android_Setting_fromString(
             std::unique_ptr<fostlib::setting<fostlib::json>>(
                 new fostlib::setting<fostlib::json>(domain, section, name, value)));
         fostlib::log::info(c_module)
-            ("domain", domain)("section", section)("name", name)("value", value);
+            ("domain", domain)
+            ("section", section)
+            ("name", name)
+            ("value", value);
         return true;
     } catch ( fostlib::exceptions::exception &e ) {
         fostlib::log::error(c_module)
-            ("exception", e.what())("data", e.data());
+            ("exception", e.what())
+            ("data", e.data());
         return false;
     }
 }
