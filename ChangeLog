@@ -1,0 +1,3 @@
+2016-07-20  Kirit Saelensminde  <kirit@felspar.com>
+ * Fix a problem that was stopping the new JNI onload mechanism from working.
+ * Added ChangeLog

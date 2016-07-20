@@ -34,8 +34,13 @@ namespace fostlib {
 
     /// Add a lambda that is to be called when the application loads
     class jni_onload {
+        std::function<void(JNIEnv *)> lambda;
     public:
-        jni_onload(std::function<void(void)> onload);
+        jni_onload(std::function<void(JNIEnv *)> onload);
+
+        void operator () (JNIEnv *e) const {
+            lambda(e);
+        }
     };
 
 

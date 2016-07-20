@@ -15,9 +15,9 @@ namespace {
     const fostlib::module c_jni(fostlib::c_fost, "JNI");
 
     auto g_onload() {
-        std::mutex g_onload_mutex;
-        std::vector<std::function<void(void)>> g_onload;
-        return std::make_pair(std::unique_lock<std::mutex>(g_onload_mutex), g_onload);
+        static std::mutex g_onload_mutex;
+        static std::vector<fostlib::jni_onload*> g_onload;
+        return std::make_pair(std::unique_lock<std::mutex>(g_onload_mutex), &g_onload);
     }
 }
 jclass com::felspar::android::Asset = nullptr;
@@ -26,9 +26,11 @@ jclass com::felspar::android::Asset = nullptr;
 const fostlib::module fostlib::c_android(c_jni, "android");
 
 
-fostlib::jni_onload::jni_onload(std::function<void(void)> onload) {
+fostlib::jni_onload::jni_onload(std::function<void(JNIEnv *)> onload)
+: lambda(onload) {
     auto loader = g_onload();
-    loader.second.push_back(onload);
+    loader.second->push_back(this);
+    __android_log_print(3, "Fost Android jni_onload", "Added onload handler");
 }
 
 
@@ -39,8 +41,11 @@ jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
     com::felspar::android::Asset = reinterpret_cast<jclass>(
         env->NewGlobalRef(
             env->FindClass("com/felspar/android/Asset")));
-    for ( const auto &onload : g_onload().second ) {
-        onload();
+    auto loaders = g_onload();
+    __android_log_print(4, "Fost Android OnLoad", "Loaders to run %d", loaders.second->size());
+    for ( const auto &onload : *loaders.second ) {
+        __android_log_print(3, "Fost Android OnLoad", "Running loader");
+        (*onload)(env);
     }
     return JNI_VERSION_1_6;
 }
