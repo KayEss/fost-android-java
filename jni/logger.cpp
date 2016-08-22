@@ -8,10 +8,13 @@
 
 #include "fost-android.hpp"
 #include <android/log.h>
+#include <fost/insert>
 #include <fost/log>
 
 
 namespace {
+
+
     class logger {
     public:
         logger(const fostlib::json &) {}
@@ -34,4 +37,33 @@ namespace {
     };
 
     const fostlib::log::global_sink<logger> android_log_print("android_log_print");
+
+
+    const fostlib::module c_javascript("JavaScript");
+
+
 }
+
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_felspar_android_Logger_log(
+    JNIEnv *env, jobject self, int priority, jstring jtag, jstring jmessage
+) {
+}
+
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_felspar_android_Logger_logjs(
+    JNIEnv *env, jobject self, int priority, jstring level,  jstring jmessage, int line, jstring jsource
+) {
+    const fostlib::string message = fostlib::jni_cast<fostlib::string>(env, jmessage);
+
+    fostlib::json body;
+    fostlib::insert(body, "body", fostlib::json::parse(message, fostlib::json(message)));
+    fostlib::insert(body, "from", "line", line);
+    fostlib::insert(body, "from", "source", fostlib::jni_cast<fostlib::string>(env, jsource));
+
+    fostlib::log::log(fostlib::log::message(c_javascript,
+        priority, fostlib::jni_cast<fostlib::string>(env, level).c_str(), body));
+}
+

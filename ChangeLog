@@ -1,3 +1,6 @@
+2016-08-22  Kirit Saelensminde  <kirit@felspar.com>
+ Added optional library for logging to Crashlytics (Fabric.io).
+
 2016-07-20  Kirit Saelensminde  <kirit@felspar.com>
  * Fix a problem that was stopping the new JNI onload mechanism from working.
  * Added ChangeLog
