@@ -33,10 +33,8 @@ namespace {
             } else if ( m.level() >= 0x400u ) {
                 level = 4; // INFO
             }
-            jobject tag = env->NewGlobalRef(
-                env->NewStringUTF(m.module().as_string().c_str()));
-            jobject message = env->NewGlobalRef(
-                env->NewStringUTF(fostlib::json::unparse(m.body(), false).c_str()));
+            jobject tag = env->NewStringUTF(m.module().as_string().c_str());
+            jobject message = env->NewStringUTF(fostlib::json::unparse(m.body(), false).c_str());
             env->CallStaticVoidMethod(crashlytics, crashlytics_logcat, level, tag, message);
             return true;
         }
