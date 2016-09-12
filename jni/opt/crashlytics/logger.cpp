@@ -33,9 +33,11 @@ namespace {
             } else if ( m.level() >= 0x400u ) {
                 level = 4; // INFO
             }
+            env->PushLocalFrame(2); // We have 2 strings
             jobject tag = env->NewStringUTF(m.module().as_string().c_str());
             jobject message = env->NewStringUTF(fostlib::json::unparse(m.body(), false).c_str());
             env->CallStaticVoidMethod(crashlytics, crashlytics_logcat, level, tag, message);
+            env->PopLocalFrame(nullptr);
             return true;
         }
     };
