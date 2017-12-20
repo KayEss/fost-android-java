@@ -1,5 +1,5 @@
 /*
-    Copyright 2014 Felspar Co Ltd. http://support.felspar.com/
+    Copyright 2014-2017 Felspar Co Ltd. http://support.felspar.com/
     Distributed under the Boost Software License, Version 1.0.
     See accompanying file LICENSE_1_0.txt or copy at
         http://www.boost.org/LICENSE_1_0.txt
@@ -16,7 +16,7 @@
 
 namespace {
     fostlib::worker g_server;
-    boost::shared_ptr< fostlib::detail::future_result< void > > g_running;
+    std::shared_ptr<fostlib::detail::future_result<void>> g_running;
 
     boost::mutex g_terminate_lock;
     bool g_terminate = false;
