@@ -1,5 +1,5 @@
 /*
-    Copyright 2014-2016 Felspar Co Ltd. http://support.felspar.com/
+    Copyright 2014-2017 Felspar Co Ltd. http://support.felspar.com/
     Distributed under the Boost Software License, Version 1.0.
     See accompanying file LICENSE_1_0.txt or copy at
         http://www.boost.org/LICENSE_1_0.txt
@@ -42,7 +42,8 @@ jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
         env->NewGlobalRef(
             env->FindClass("com/felspar/android/Asset")));
     auto loaders = g_onload();
-    __android_log_print(4, "Fost Android OnLoad", "Loaders to run %d", loaders.second->size());
+    auto number = std::to_string(loaders.second->size()); // Costs us an allocation, but at least it's always safe
+    __android_log_print(4, "Fost Android OnLoad", "Loaders to run %s", number.c_str());
     for ( const auto &onload : *loaders.second ) {
         __android_log_print(3, "Fost Android OnLoad", "Running loader");
         (*onload)(env);
