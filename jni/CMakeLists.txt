@@ -1,0 +1,17 @@
+find_library(log-lib log)
+
+add_library(fost-android-java
+        assets.cpp
+        downloader.cpp
+        fost-android.cpp
+        logger.cpp
+        setting.cpp
+        view-assets.cpp
+        webserver.cpp
+    )
+target_link_libraries(fost-android-java
+        ${log-lib}
+        fost-aws
+        fost-urlhandler
+    )
+
