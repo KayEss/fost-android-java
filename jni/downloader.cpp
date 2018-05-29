@@ -1,8 +1,8 @@
-/*
-    Copyright 2014 Felspar Co Ltd. http://support.felspar.com/
+/**
+    Copyright 2014-2018 Felspar Co Ltd. <https://support.felspar.com/>
+
     Distributed under the Boost Software License, Version 1.0.
-    See accompanying file LICENSE_1_0.txt or copy at
-        http://www.boost.org/LICENSE_1_0.txt
+    See <http://www.boost.org/LICENSE_1_0.txt>
 */
 
 
@@ -29,7 +29,7 @@ namespace {
                 config["location"])));
         json db_content(json::parse(content));
         insert(result, "downloaded", db_content);
-        insert(result, "time-taken", taken.elapsed());
+        insert(result, "time-taken", taken.seconds());
         return result;
     }
 
