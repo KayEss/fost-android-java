@@ -1,5 +1,5 @@
 /**
-    Copyright 2014-2018 Felspar Co Ltd. http://support.felspar.com/
+    Copyright 2014-2018 Felspar Co Ltd. <http://support.felspar.com/>
 
     Distributed under the Boost Software License, Version 1.0.
     See <http://www.boost.org/LICENSE_1_0.txt>
@@ -26,9 +26,9 @@ Java_com_felspar_android_WebServer_start(
     JNIEnv *env, jobject self
 ) {
     /// Start the web server and set the termination condition
-    g_running = g_server([]() -> bool {
+    g_running = g_server([]() {
         fostlib::http::server server(fostlib::host(0), 2555);
-        server(fostlib::urlhandler::service, []() {
+        server(fostlib::urlhandler::service, []() -> bool {
             return g_terminate.load();
         });
     });
