@@ -11,7 +11,7 @@ add_library(fost-android-java
     )
 target_link_libraries(fost-android-java
         ${log-lib}
-        fost-aws
+        fost-s3
         fost-urlhandler
     )
 
