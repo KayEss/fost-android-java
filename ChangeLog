@@ -1,3 +1,6 @@
+2018-05-31  Kirit Saelensminde  <kirit@felspar.com>
+ Add a new web server view for single asset files, [`fost.android.asset`](./jni/view-assets.cpp).
+
 2016-08-22  Kirit Saelensminde  <kirit@felspar.com>
  Added optional library for logging to Crashlytics (Fabric.io).
 
