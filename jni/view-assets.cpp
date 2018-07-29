@@ -15,7 +15,7 @@
  * There seems to be some problem with this and threading that can
  * cause the Java side to crash. It might be better to use the native
  * asset APIs and see if they allow us to switch to the threaded
- * web servers. This implmentation will go in
+ * web servers. This implementation will go in
  * [`assets.cpp`](./assets.cpp).
  */
 
