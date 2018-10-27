@@ -9,6 +9,7 @@ add_library(fost-android-java
         view-assets.cpp
         webserver.cpp
     )
+target_include_directories(fost-android-java PUBLIC .)
 target_link_libraries(fost-android-java
         ${log-lib}
         fost-s3
