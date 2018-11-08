@@ -1,3 +1,6 @@
+2018-11-08  Kirit Saelensminde  <kirit@felspar.com>
+ Add cmake configuration for opt/crashlytics
+
 2018-05-31  Kirit Saelensminde  <kirit@felspar.com>
  Add a new web server view for single asset files, [`fost.android.asset`](./jni/view-assets.cpp).
 
