@@ -1,8 +1,6 @@
 find_library(log-lib log)
 
 add_library(fost-android-java
-        assets.cpp
-        downloader.cpp
         fost-android.cpp
         logger.cpp
         setting.cpp
