@@ -1,0 +1,12 @@
+2018-11-08  Kirit Saelensminde  <kirit@felspar.com>
+ Add cmake configuration for opt/crashlytics
+
+2018-05-31  Kirit Saelensminde  <kirit@felspar.com>
+ Add a new web server view for single asset files, [`fost.android.asset`](./jni/view-assets.cpp).
+
+2016-08-22  Kirit Saelensminde  <kirit@felspar.com>
+ Added optional library for logging to Crashlytics (Fabric.io).
+
+2016-07-20  Kirit Saelensminde  <kirit@felspar.com>
+ * Fix a problem that was stopping the new JNI onload mechanism from working.
+ * Added ChangeLog

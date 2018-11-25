@@ -1,5 +1,5 @@
 /*
-    Copyright 2014 Felspar Co Ltd. http://support.felspar.com/
+    Copyright 2014-2016 Felspar Co Ltd. http://support.felspar.com/
     Distributed under the Boost Software License, Version 1.0.
     See accompanying file LICENSE_1_0.txt or copy at
         http://www.boost.org/LICENSE_1_0.txt
@@ -22,15 +22,19 @@ public class Asset {
     private static final String TAG = "com.felspar.android.Assets";
     private static AssetManager assets;
 
-    public static String loadString(AssetManager assetManager, String fromAssetPath) throws IOException {
+    public static void setAssets(AssetManager assetManager) {
         assets = assetManager;
+    }
+
+    public static String loadString(AssetManager assetManager, String fromAssetPath) throws IOException {
+        setAssets(assetManager);
         Logger.log(Log.DEBUG, TAG, fromAssetPath);
         InputStream in = assetManager.open(fromAssetPath);
         return new String(readFully(in), "UTF-8");
     }
     
     public static void copyFile(AssetManager assetManager, String fromAssetPath, File to) throws IOException {
-    	assets = assetManager;
+        setAssets(assetManager);
         Logger.log(Log.DEBUG, TAG, fromAssetPath);
         InputStream in = assetManager.open(fromAssetPath);
         OutputStream out = new FileOutputStream(to);

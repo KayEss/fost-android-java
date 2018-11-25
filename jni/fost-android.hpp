@@ -1,5 +1,5 @@
 /*
-    Copyright 2014 Felspar Co Ltd. http://support.felspar.com/
+    Copyright 2014-2016 Felspar Co Ltd. http://support.felspar.com/
     Distributed under the Boost Software License, Version 1.0.
     See accompanying file LICENSE_1_0.txt or copy at
         http://www.boost.org/LICENSE_1_0.txt
@@ -11,6 +11,9 @@
 
 
 namespace fostlib {
+
+
+    extern const module c_android;
 
 
     /// Fetch the JNI environment for the current thread
@@ -27,6 +30,19 @@ namespace fostlib {
             });
         return S(cloc.get());
     }
+
+
+    /// Add a lambda that is to be called when the application loads
+    class jni_onload {
+        std::function<void(JNIEnv *)> lambda;
+    public:
+        jni_onload(std::function<void(JNIEnv *)> onload);
+
+        void operator () (JNIEnv *e) const {
+            lambda(e);
+        }
+    };
+
 
 }
 

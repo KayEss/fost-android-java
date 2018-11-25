@@ -1,5 +1,5 @@
 /*
-    Copyright 2014 Felspar Co Ltd. http://support.felspar.com/
+    Copyright 2014-2016 Felspar Co Ltd. http://support.felspar.com/
     Distributed under the Boost Software License, Version 1.0.
     See accompanying file LICENSE_1_0.txt or copy at
         http://www.boost.org/LICENSE_1_0.txt
@@ -8,10 +8,13 @@
 
 #include "fost-android.hpp"
 #include <android/log.h>
+#include <fost/insert>
 #include <fost/log>
 
 
 namespace {
+
+
     class logger {
     public:
         logger(const fostlib::json &) {}
@@ -25,14 +28,42 @@ namespace {
             } else if ( m.level() >= 0x400u ) {
                 level = 4; // INFO
             }
-            __android_log_print(level, m.module().value("C++").c_str(),
+            __android_log_print(level,
+                    m.module().as_string().c_str(),
                     "%s", fostlib::json::unparse(
                         fostlib::coerce<fostlib::json>(m)["body"], false).c_str());
             return true;
         }
     };
+
+    const fostlib::log::global_sink<logger> android_log_print("android_log_print");
+
+
+    const fostlib::module c_javascript("JavaScript");
+
+
 }
 
-namespace {
-    const fostlib::log::global_sink<logger> android_log_print("android_log_print");
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_felspar_android_Logger_log(
+    JNIEnv *env, jobject self, int priority, jstring jtag, jstring jmessage
+) {
 }
+
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_felspar_android_Logger_logjs(
+    JNIEnv *env, jobject self, int priority, jstring level,  jstring jmessage, int line, jstring jsource
+) {
+    const fostlib::string message = fostlib::jni_cast<fostlib::string>(env, jmessage);
+
+    fostlib::json body;
+    fostlib::insert(body, "body", fostlib::json::parse(message, fostlib::json(message)));
+    fostlib::insert(body, "from", "line", line);
+    fostlib::insert(body, "from", "source", fostlib::jni_cast<fostlib::string>(env, jsource));
+
+    fostlib::log::log(fostlib::log::message(c_javascript,
+        priority, fostlib::jni_cast<fostlib::string>(env, level).c_str(), body));
+}
+
