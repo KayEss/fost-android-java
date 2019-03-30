@@ -1,8 +1,8 @@
-/*
-    Copyright 2014-2016 Felspar Co Ltd. http://support.felspar.com/
+/**
+    Copyright 2014-2019 Felspar Co Ltd. <http://support.felspar.com/>
+
     Distributed under the Boost Software License, Version 1.0.
-    See accompanying file LICENSE_1_0.txt or copy at
-        http://www.boost.org/LICENSE_1_0.txt
+    See <http://www.boost.org/LICENSE_1_0.txt>
 */
 
 
@@ -64,6 +64,6 @@ Java_com_felspar_android_Logger_logjs(
     fostlib::insert(body, "from", "source", fostlib::jni_cast<fostlib::string>(env, jsource));
 
     fostlib::log::log(fostlib::log::message(c_javascript,
-        priority, fostlib::jni_cast<fostlib::string>(env, level).c_str(), body));
+        priority, fostlib::jni_cast<fostlib::string>(env, level).u8string_transition(), body));
 }
 
