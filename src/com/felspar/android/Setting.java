@@ -18,7 +18,7 @@ public class Setting {
     public static String readStringFrom(String section, String name) throws Exception {
         String value = readString(section, name);
         if(!value.startsWith("Bearer "))
-            throw new Exception("An error occur. " + value);
+            throw new Exception("An error occured. " + value);
         return value;
     }
 }
