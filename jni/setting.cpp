@@ -86,7 +86,7 @@ Java_com_felspar_android_Setting_readString(
                 section = fostlib::jni_cast<fostlib::string>(env, jsection),
                 name = fostlib::jni_cast<fostlib::string>(env, jname);
         if (not fostlib::setting<fostlib::string>::exists(section, name))
-            return env->NewStringUTF("NOT FOUND.");
+            return env->NewStringUTF("*NOT FOUND.");
         return env->NewStringUTF(
                 fostlib::setting<fostlib::string>::value(section, name).shrink_to_fit());
     } catch (fostlib::exceptions::exception &e) {
@@ -94,7 +94,7 @@ Java_com_felspar_android_Setting_readString(
                 ("exception", e.what())
                 ("data", e.data());
         return env->NewStringUTF(
-                (std::string{e.what()}).c_str());
+                (std::string{"*"} + e.what()).c_str());
     }
 }
 
