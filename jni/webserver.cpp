@@ -14,10 +14,9 @@
 
 
 namespace {
+    fostlib::http::server *g_webserver = nullptr;
     fostlib::worker g_server;
     std::shared_ptr<fostlib::detail::future_result<void>> g_running;
-
-    std::atomic<bool> g_terminate{false};
 }
 
 
@@ -28,8 +27,9 @@ Java_com_felspar_android_WebServer_start(
     /// Start the web server and set the termination condition
     g_running = g_server([]() {
         fostlib::http::server server(fostlib::host(0), 2555);
+        g_webserver = &server;
         server(fostlib::urlhandler::service, []() -> bool {
-            return g_terminate.load();
+            return false;
         });
     });
 }
@@ -39,10 +39,9 @@ extern "C" JNIEXPORT void JNICALL
 Java_com_felspar_android_WebServer_stop(
     JNIEnv *env, jobject self
 ) {
-    /// Tell the server to stop
-    g_terminate = true;
-    /// Tickle the port so it notices
-    fostlib::network_connection tickle(fostlib::host("localhost"), 2555);
-    g_running->wait();
+    if(g_webserver) {
+        g_webserver->stop_server();
+        g_webserver = nullptr;
+     }
 }
 
