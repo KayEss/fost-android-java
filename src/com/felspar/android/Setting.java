@@ -17,8 +17,16 @@ public class Setting {
 
     public static String readStringFrom(String section, String name) throws Exception {
         String value = readString(section, name);
-        if(value.startsWith("*"))
-            throw new Exception("An error occured. " + value);
+        if(value == null)
+            throw new Exception("An error occured.");
         return value;
+    }
+
+    public static String readStringFrom(String section, String name, String defaultValue) {
+        try {
+            return readStringFrom(section, name);
+        }catch (Exception e){
+            return defaultValue;
+        }
     }
 }
