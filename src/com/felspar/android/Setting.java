@@ -10,5 +10,15 @@ package com.felspar.android;
 
 public class Setting {
     public native static boolean fromJSON(String domain, String json);
+
     public native static boolean fromString(String domain, String section, String name, String value);
+
+    private native static String readString(String section, String name);
+
+    public static String readStringFrom(String section, String name) throws Exception {
+        String value = readString(section, name);
+        if(value.startsWith("*"))
+            throw new Exception("An error occured. " + value);
+        return value;
+    }
 }
