@@ -24,10 +24,9 @@ namespace fostlib {
     template<typename S>
     S jni_cast(JNIEnv *env, jstring jstr) {
         std::shared_ptr<const char> cloc(
-            env->GetStringUTFChars(jstr, NULL),
-            [=](const char *ptr) {
-                env->ReleaseStringUTFChars(jstr, ptr);
-            });
+                env->GetStringUTFChars(jstr, NULL), [=](const char *ptr) {
+                    env->ReleaseStringUTFChars(jstr, ptr);
+                });
         return S(cloc.get());
     }
 
@@ -35,17 +34,15 @@ namespace fostlib {
     /// Add a lambda that is to be called when the application loads
     class jni_onload {
         std::function<void(JNIEnv *)> lambda;
-    public:
+
+      public:
         jni_onload(std::function<void(JNIEnv *)> onload);
 
-        void operator () (JNIEnv *e) const {
-            lambda(e);
-        }
+        void operator()(JNIEnv *e) const { lambda(e); }
     };
 
 
 }
-
 
 
 namespace com {
@@ -60,4 +57,3 @@ namespace com {
         }
     }
 }
-

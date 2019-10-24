@@ -16,8 +16,9 @@ namespace {
 
     auto g_onload() {
         static std::mutex g_onload_mutex;
-        static std::vector<fostlib::jni_onload*> g_onload;
-        return std::make_pair(std::unique_lock<std::mutex>(g_onload_mutex), &g_onload);
+        static std::vector<fostlib::jni_onload *> g_onload;
+        return std::make_pair(
+                std::unique_lock<std::mutex>(g_onload_mutex), &g_onload);
     }
 }
 jclass com::felspar::android::Asset = nullptr;
@@ -34,17 +35,18 @@ fostlib::jni_onload::jni_onload(std::function<void(JNIEnv *)> onload)
 }
 
 
-extern "C" JNIEXPORT
-jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
+extern "C" JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *reserved) {
     g_JavaVM = vm;
     JNIEnv *env = fostlib::get_environment();
     com::felspar::android::Asset = reinterpret_cast<jclass>(
-        env->NewGlobalRef(
-            env->FindClass("com/felspar/android/Asset")));
+            env->NewGlobalRef(env->FindClass("com/felspar/android/Asset")));
     auto loaders = g_onload();
-    auto number = std::to_string(loaders.second->size()); // Costs us an allocation, but at least it's always safe
-    __android_log_print(4, "Fost Android OnLoad", "Loaders to run %s", number.c_str());
-    for ( const auto &onload : *loaders.second ) {
+    auto number = std::to_string(
+            loaders.second->size()); // Costs us an allocation, but at least
+                                     // it's always safe
+    __android_log_print(
+            4, "Fost Android OnLoad", "Loaders to run %s", number.c_str());
+    for (const auto &onload : *loaders.second) {
         __android_log_print(3, "Fost Android OnLoad", "Running loader");
         (*onload)(env);
     }
@@ -54,17 +56,18 @@ jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {
 
 JNIEnv *fostlib::get_environment() {
     JNIEnv *env = nullptr;
-    g_JavaVM->GetEnv((void**)&env, JNI_VERSION_1_6);
-    if ( env == nullptr ) {
-        __android_log_print(ANDROID_LOG_WARN, "fost-android",
-            "No environment available yet -- attaching thread");
+    g_JavaVM->GetEnv((void **)&env, JNI_VERSION_1_6);
+    if (env == nullptr) {
+        __android_log_print(
+                ANDROID_LOG_WARN, "fost-android",
+                "No environment available yet -- attaching thread");
         int status = g_JavaVM->AttachCurrentThread(&env, nullptr);
-        if ( status != JNI_OK ) {
-            __android_log_print(ANDROID_LOG_ERROR, "fost-android",
-                "AttachCurrentThread failed %d", status);
+        if (status != JNI_OK) {
+            __android_log_print(
+                    ANDROID_LOG_ERROR, "fost-android",
+                    "AttachCurrentThread failed %d", status);
             return nullptr;
         }
     }
     return env;
 }
-

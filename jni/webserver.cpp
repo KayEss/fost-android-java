@@ -21,27 +21,20 @@ namespace {
 
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_felspar_android_WebServer_start(
-    JNIEnv *env, jobject self
-) {
+        Java_com_felspar_android_WebServer_start(JNIEnv *env, jobject self) {
     /// Start the web server and set the termination condition
     g_running = g_server([]() {
         fostlib::http::server server(fostlib::host(0), 2555);
         g_webserver = &server;
-        server(fostlib::urlhandler::service, []() -> bool {
-            return false;
-        });
+        server(fostlib::urlhandler::service, []() -> bool { return false; });
     });
 }
 
 
 extern "C" JNIEXPORT void JNICALL
-Java_com_felspar_android_WebServer_stop(
-    JNIEnv *env, jobject self
-) {
-    if(g_webserver) {
+        Java_com_felspar_android_WebServer_stop(JNIEnv *env, jobject self) {
+    if (g_webserver) {
         g_webserver->stop_server();
         g_webserver = nullptr;
-     }
+    }
 }
-
