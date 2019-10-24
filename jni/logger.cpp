@@ -29,9 +29,9 @@ namespace {
                 level = 4; // INFO
             }
             __android_log_print(level,
-                    m.module().as_string().c_str(),
+                    m.module().as_string().shrink_to_fit(),
                     "%s", fostlib::json::unparse(
-                        fostlib::coerce<fostlib::json>(m)["body"], false).c_str());
+                        fostlib::coerce<fostlib::json>(m)["body"], false).shrink_to_fit());
             return true;
         }
     };

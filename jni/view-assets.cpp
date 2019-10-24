@@ -25,13 +25,13 @@ namespace {
      * This function fetches an asset from the asset manager, or returns
      * a nullptr
      */
-    f5::shared_buffer<jbyte> assetdata(const fostlib::string &path) {
+    f5::shared_buffer<jbyte> assetdata(fostlib::string path) {
         JNIEnv *env = fostlib::get_environment();
         jmethodID jloadBytes(env->GetStaticMethodID(
                 com::felspar::android::Asset,
                 "loadBytes", "(Ljava/lang/String;)[B"));
         jstring asset(reinterpret_cast<jstring>(
-                              env->NewLocalRef(env->NewStringUTF(path.c_str()))));
+                              env->NewLocalRef(env->NewStringUTF(path.shrink_to_fit()))));
         jobject load_result(env->CallStaticObjectMethod(
                 com::felspar::android::Asset, jloadBytes, asset));
         /// It's a bit confusing to have a pointer to this in `jbytes`...
