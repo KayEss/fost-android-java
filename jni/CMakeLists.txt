@@ -3,6 +3,7 @@ find_library(log-lib log)
 add_library(fost-android-java
         fost-android.cpp
         logger.cpp
+        messaging.cpp
         setting.cpp
         view-assets.cpp
         webserver.cpp
